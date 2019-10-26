@@ -1,0 +1,29 @@
+:host .titulo {
+  margin-left: 40%;
+}
+
+.secao {
+  margin-bottom: 10px;
+}
+
+img {
+  border-radius: 5px;
+  width: 135px;
+  height: 122px;
+}
+
+.itens {
+  border: 2px solid black;
+}
+
+.container-lista {
+  margin-left: -20px;
+}
+
+.text-body-card-list{
+  margin-top: 28px;
+}
+
+.hr {
+  margin-right: 30px;
+}

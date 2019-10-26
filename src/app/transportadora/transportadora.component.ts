@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Transportadora } from '../transportadora/transportadora.model';
 import { TransportadoraService } from '../transportadora/transportadora.service';
 
@@ -14,7 +14,7 @@ export class TransportadoraComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
 
   public dataModals: any[] = [];
-  public dataEstados: any[] = [];
+  public dataUFs: any[] = [];
 
   constructor(
     private service: TransportadoraService,
@@ -23,27 +23,17 @@ export class TransportadoraComponent implements OnInit {
 
   ngOnInit() {
     this.iniciarFormulario();
-    this.carregarListaTransportadoras();
+    //this.carregarListaTransportadoras();
   }
 
   iniciarFormulario() {
     this.iniciarDadosDoFormulario();
 
     this.form = this.formBuilder.group({
-      email: [null, [Validators.required]],
-      nome: [null, [Validators.required]],
-      empresa: [null, [Validators.required]],
-      telefone: [null, [Validators.required]],
-      modal_id: [null, [Validators.required]],
-      logradouro: [null, [Validators.required]],
-      numero: [null, [Validators.required]],
-      bairro: [null, [Validators.required]],
-      cidade: [null, [Validators.required]],
-      estado_id: [null, [Validators.required]],
-      celular: [null],
-      whatsapp: [null],
-      cep: [null],
-      termo: [null],
+      nome: [null],
+      uf: [null],
+      cidade: [null],
+      modal: [null],
     });
 
   }
@@ -51,20 +41,10 @@ export class TransportadoraComponent implements OnInit {
   resetarFormulario() {
     this.transportadora = new Transportadora();
     this.form.setValue({
-      email: null,
       nome: null,
-      empresa: null,
-      telefone: null,
-      modal_id: null,
-      logradouro: null,
-      numero: null,
-      bairro: null,
+      uf: null,
       cidade: null,
-      estado_id: null,
-      celular: null,
-      whatsapp: null,
-      cep: null,
-      termo: null,
+      modal: null,
     });
   }
 
@@ -77,50 +57,21 @@ export class TransportadoraComponent implements OnInit {
   }
 
   onSubmit() {
+    const formValue = Object.assign({}, this.form.value);
 
-    if (this.form.valid) {
-
-      let formValue = Object.assign({}, this.form.value);
-      let formFormated = Object.assign(formValue, {
+    this.service.update('', formValue)
+      .subscribe((transportadora: Transportadora) => {
+        console.log(transportadora);
+        alert('Transportadora cadastrada com sucesso!');
+      }, err => {
+        alert(err);
       });
-
-      if (this.transportadora.id) {
-
-        this.service.update('', formFormated)
-        .subscribe((transportadora: Transportadora) => {
-          console.log(transportadora);
-          alert('Transportadora cadastrada com sucesso!');
-        }, err => {
-          alert(err);
-        });
-
-      } else {
-
-        this.service.create('', formFormated)
-        .subscribe((transportadora: Transportadora) => {
-          console.log(transportadora);
-          alert('Transportadora atualizada com sucesso!');
-        }, err => {
-          alert(err);
-        });
-
-      }
-    }
   }
 
   carregarListaTransportadoras() {
     this.service.getAll('')
       .subscribe((listaTransportadoras: Transportadora[]) => {
         this.listaTransportadoras = listaTransportadoras;
-      }, err => {
-        alert(err);
-      });
-  }
-
-  deletarTransportadora(transportadora: Transportadora) {
-    this.service.delete('', transportadora.id)
-      .subscribe((listaTransportadoras: Transportadora[]) => {
-        alert('Transportadora removida com sucesso!');
       }, err => {
         alert(err);
       });
