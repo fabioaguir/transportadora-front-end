@@ -1,0 +1,117 @@
+<div class="container-fluid" style="padding: 16px">
+  <div class="row topo">
+    <div class="col-md-4">
+      <h3 class="text-left">Cadastro</h3>
+    </div>
+  </div>
+  <hr />
+</div>
+
+<div class="container" style="padding: 16px; width: 30%;">
+  <div class="row">
+    <div class="col-md-12">
+      <form *ngIf="form" [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
+          <div class="col-sm-10">
+            <input type="email" formControlName="email" [(ngModel)]="transportadora.email" class="form-control" id="email">
+            <small *ngIf="!form.get('email').valid && form.get('email').touched" class="form-text text-danger">E-mail inválido ou não informado</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="nome" class="col-sm-2 col-form-label">Nome:</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="nome" [(ngModel)]="transportadora.nome" class="form-control" id="nome">
+            <small *ngIf="!form.get('nome').valid && form.get('nome').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="empresa" class="col-sm-2 col-form-label">Empresa:</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="empresa" [(ngModel)]="transportadora.empresa" class="form-control" id="empresa">
+            <small *ngIf="!form.get('empresa').valid && form.get('empresa').touched" class="form-text text-danger">Empresa com menos de 4 caracteres ou não informada</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="telefone" class="col-sm-2 col-form-label">Telefone:</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="telefone" [(ngModel)]="transportadora.telefone" class="form-control" id="telefone">
+            <small *ngIf="!form.get('telefone').valid && form.get('telefone').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="celular" class="col-sm-2 col-form-label">Celular:</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="celular" [(ngModel)]="transportadora.celular" class="form-control" id="celular">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="whatsapp" class="col-sm-2 col-form-label">Whatsapp</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="whatsapp" [(ngModel)]="transportadora.whatsapp" class="form-control" id="whatsapp">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="modal" class="col-sm-2 col-form-label">Modal</label>
+          <div class="col-sm-10">
+            <select id="uf" formControlName="modal_id" [(ngModel)]="transportadora.modal_id" class="form-control">
+            </select>
+            <small *ngIf="!form.get('modal_id').valid && form.get('modal_id').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="cep" class="col-sm-2 col-form-label">CEP</label>
+          <div class="col-sm-4">
+            <input type="text" formControlName="cep" [(ngModel)]="transportadora.cep" class="form-control" id="cep">
+          </div>
+          <label for="uf" class="col-sm-1 col-form-label">UF</label>
+          <div class="col-sm-5">
+            <select id="uf" formControlName="uf_id" [(ngModel)]="transportadora.uf_id" class="form-control">
+            </select>
+            <small *ngIf="!form.get('uf_id').valid && form.get('uf_id').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="cidade" class="col-sm-2 col-form-label">Cidade</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="cidade" [(ngModel)]="transportadora.cidade" class="form-control" id="cidade">
+            <small *ngIf="!form.get('cidade').valid && form.get('cidade').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="bairro" class="col-sm-2 col-form-label">Bairro</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="bairro" [(ngModel)]="transportadora.bairro" class="form-control" id="bairro">
+            <small *ngIf="!form.get('bairro').valid && form.get('bairro').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="logradouro" class="col-sm-2 col-form-label">Rua/Avenida</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="logradouro" [(ngModel)]="transportadora.logradouro" class="form-control" id="logradouro">
+            <small *ngIf="!form.get('logradouro').valid && form.get('logradouro').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="numero" class="col-sm-2 col-form-label">Número</label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="numero" [(ngModel)]="transportadora.numero" class="form-control" id="numero">
+            <small *ngIf="!form.get('numero').valid && form.get('numero').touched" class="form-text text-danger">Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="col-md-12 text-center">
+          <div class="form-check">
+            <input class="form-check-input" formControlName="termo" [(ngModel)]="transportadora.termo" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+              Eu aceito os termos de serviço
+            </label>
+          </div>
+        </div>
+        <br />
+        <div class="col-md-12 text-center">
+          <button style="width: 60%" type="submit" class="btn btn-success">Cadastrar sua Transportadora</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

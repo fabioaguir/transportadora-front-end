@@ -8,11 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { TransportadoraComponent } from './transportadora/transportadora.component';
 import { TransportadoraService } from './transportadora/transportadora.service';
+import { CadastroComponent } from './transportadora/cadastro/cadastro.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TransportadoraComponent
+    TransportadoraComponent,
+    CadastroComponent
   ],
   imports: [
     BrowserModule,

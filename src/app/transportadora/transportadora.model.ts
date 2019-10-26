@@ -8,7 +8,7 @@ export class Transportadora {
   whatsapp: string = null;
   modal_id: number = null;
   cep: string = null;
-  estado_id: number = null;
+  uf_id: number = null;
   cidade: string = null;
   bairro: string = null;
   logradouro: string = null;
