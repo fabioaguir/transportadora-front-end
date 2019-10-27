@@ -3,6 +3,7 @@ export class Transportadora {
   email: string = null;
   nome: string = null;
   empresa: string = null;
+  cnpj: string = null;
   telefone: string = null;
   celular: string = null;
   whatsapp: string = null;
@@ -14,4 +15,6 @@ export class Transportadora {
   logradouro: string = null;
   numero: string = null;
   termo: boolean = null;
+  modal: any = null;
+  uf: any = null;
 }

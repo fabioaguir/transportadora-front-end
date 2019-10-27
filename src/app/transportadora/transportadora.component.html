@@ -4,7 +4,8 @@
       <h3 class="text-left titulo">Transportadoras |</h3>
     </div>
     <div class="col-md-8 text-right">
-      <button style="width: 30%" [routerLink]="['/cadastro']" class="btn btn-success">Cadastrar sua Transportadora</button>
+      <button style="width: 30%" [routerLink]="['/cadastro']" class="btn btn-success">Cadastrar sua
+        Transportadora</button>
     </div>
   </div>
   <hr />
@@ -13,7 +14,7 @@
       <div class="row">
         <div class="col-md-4">
           <h4 class="text-left">Transportadoras</h4>
-          <p>1234 resultados</p>
+          <p>{{ resultadosDoFiltro }} resultados</p>
         </div>
       </div>
       <hr class="hr" />
@@ -47,30 +48,32 @@
     </div>
 
     <div class="col-md-9 container-lista">
-      <div class="row itens">
-        <div class="col-md-2">
-          <img src="/assets/imagens/hive_logo.png" class="img-fluid" />
-        </div>
+      <ng-container *ngFor="let transportadora of listaTransportadoras">
+        <div class="row itens">
+          <div class="col-md-2">
+            <img src="/assets/imagens/hive_logo.png" class="img-fluid" />
+          </div>
 
-        <div class="col-md-10 text-body-card-list">
-          <div class="row">
-            <div class="col-md-4">
-              <a href="#">Xadrex -Rodoaéreo</a>
+          <div class="col-md-10 text-body-card-list">
+            <div class="row">
+              <div class="col-md-4">
+                <a [routerLink]="['/update', transportadora.id]">{{ transportadora.nome }}</a>
+              </div>
+              <div class="col-md-4">{{ transportadora.telefone }}  {{ transportadora.celular ? '/' + transportadora.celular : ''}}</div>
+              <div class="col-md-4">
+                <i class="fab fa-whatsapp"></i> Fale agora: <a href="#">{{ transportadora.whatsapp ? transportadora.whatsapp : ''}}</a>
+              </div>
             </div>
-            <div class="col-md-4">(11) 9635-8965 / (11) 8532-8965</div>
-            <div class="col-md-4">
-              <i class="fab fa-whatsapp"></i> Fale agora: <a href="#">(11) 8532-8965</a>
+            <div class="row">
+              <div class="col-md-4">
+                <p>{{ transportadora.cnpj }}</p>
+              </div>
+              <div class="col-md-4">{{ transportadora.email }}</div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <p>462.68965.3665.2/23</p>
-            </div>
-            <div class="col-md-4">qualidade@gmail.com</div>
           </div>
         </div>
-      </div>
-      <br />
+        <br />
+      </ng-container>
     </div>
   </div>
 </div>

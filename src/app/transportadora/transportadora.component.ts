@@ -16,6 +16,7 @@ export class TransportadoraComponent implements OnInit {
 
   public dataModals: any[] = [];
   public dataUFs: any[] = [];
+  public resultadosDoFiltro: number = 0;
 
   constructor(
     private service: TransportadoraService,
@@ -24,7 +25,7 @@ export class TransportadoraComponent implements OnInit {
 
   ngOnInit() {
     this.iniciarFormulario();
-    //this.carregarListaTransportadoras();
+    this.filtro();
   }
 
   iniciarFormulario() {
@@ -75,13 +76,18 @@ export class TransportadoraComponent implements OnInit {
       });
   }
 
-  carregarListaTransportadoras() {
-    this.service.getAll('')
-      .subscribe((listaTransportadoras: Transportadora[]) => {
-        this.listaTransportadoras = listaTransportadoras;
-      }, err => {
-        alert(err);
-      });
+  filtro() {
+    try {
+      this.service.filtro()
+        .subscribe((listaTransportadoras: Transportadora[]) => {
+          this.listaTransportadoras = listaTransportadoras.slice();
+          this.resultadosDoFiltro = this.listaTransportadoras.length;
+        }, err => {
+          alert(err);
+        });
+    } catch (erro) {
+      console.log(erro);
+    }
   }
 
 }

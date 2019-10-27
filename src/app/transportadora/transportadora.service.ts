@@ -19,16 +19,24 @@ export class TransportadoraService {
     private http: HttpClient
   ) {}
 
-  getAll(route: string) {
+  findAll(route: string) {
     return this.http.get<any[]>(route, this.headers);
   }
 
+  findById(id: number) {
+    return this.http.get(this.route + '/' + id, this.headers);
+  }
+
+  filtro() {
+    return this.http.get(this.route, this.headers);
+  }
+
   create(transportadora: Transportadora) {
-    return this.http.post<any>(this.route, JSON.stringify(transportadora), this.headers);
+    return this.http.post(this.route, JSON.stringify(transportadora), this.headers);
   }
 
   update(transportadora: Transportadora) {
-    return this.http.put<any>(this.route + '/' + transportadora.id, JSON.stringify(transportadora), this.headers);
+    return this.http.put(this.route + '/' + transportadora.id, JSON.stringify(transportadora), this.headers);
   }
 
   delete(id: number) {
