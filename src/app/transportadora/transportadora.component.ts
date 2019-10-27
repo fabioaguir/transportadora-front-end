@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Transportadora } from '../transportadora/transportadora.model';
 import { TransportadoraService } from '../transportadora/transportadora.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-transportadora',
@@ -49,17 +50,23 @@ export class TransportadoraComponent implements OnInit {
   }
 
   iniciarDadosDoFormulario() {
-
-    this.service.getHttp().get('', this.service.getHeadrs())
+    const routeModal = environment.api + 'modal';
+    this.service.getHttp().get(routeModal, this.service.getHeadrs())
       .subscribe((data: any[]) => {
         this.dataModals = data;
+      });
+
+    const routeUF = environment.api + 'uf';
+    this.service.getHttp().get(routeUF, this.service.getHeadrs())
+      .subscribe((data: any[]) => {
+        this.dataUFs = data;
       });
   }
 
   onSubmit() {
     const formValue = Object.assign({}, this.form.value);
 
-    this.service.update('', formValue)
+    this.service.update(formValue)
       .subscribe((transportadora: Transportadora) => {
         console.log(transportadora);
         alert('Transportadora cadastrada com sucesso!');

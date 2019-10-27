@@ -6,9 +6,9 @@ export class Transportadora {
   telefone: string = null;
   celular: string = null;
   whatsapp: string = null;
-  modal_id: number = null;
+  modalId: number = null;
   cep: string = null;
-  uf_id: number = null;
+  ufId: number = null;
   cidade: string = null;
   bairro: string = null;
   logradouro: string = null;

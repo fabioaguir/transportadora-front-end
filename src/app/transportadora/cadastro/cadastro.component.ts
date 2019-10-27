@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Transportadora } from '../../transportadora/transportadora.model';
 import { TransportadoraService } from '../../transportadora/transportadora.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cadastro',
@@ -13,7 +14,7 @@ export class CadastroComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
 
   public dataModals: any[] = [];
-  public dataEstados: any[] = [];
+  public dataUFs: any[] = [];
 
   constructor(
     private service: TransportadoraService,
@@ -32,16 +33,16 @@ export class CadastroComponent implements OnInit {
       nome: [null, [Validators.required]],
       empresa: [null, [Validators.required, Validators.minLength(4)]],
       telefone: [null, [Validators.required]],
-      modal_id: [null, [Validators.required]],
+      modalId: [null, [Validators.required]],
       logradouro: [null, [Validators.required]],
       numero: [null, [Validators.required]],
       bairro: [null, [Validators.required]],
       cidade: [null, [Validators.required]],
-      uf_id: [null, [Validators.required]],
+      ufId: [null, [Validators.required]],
       celular: [null],
       whatsapp: [null],
       cep: [null],
-      termo: [null],
+      termo: [false],
     });
   }
 
@@ -52,12 +53,12 @@ export class CadastroComponent implements OnInit {
       nome: null,
       empresa: null,
       telefone: null,
-      modal_id: null,
+      modalId: null,
       logradouro: null,
       numero: null,
       bairro: null,
       cidade: null,
-      estado_id: null,
+      ufId: null,
       celular: null,
       whatsapp: null,
       cep: null,
@@ -66,9 +67,16 @@ export class CadastroComponent implements OnInit {
   }
 
   iniciarDadosDoFormulario() {
-    this.service.getHttp().get('', this.service.getHeadrs())
+    const routeModal = environment.api + 'modal';
+    this.service.getHttp().get(routeModal, this.service.getHeadrs())
       .subscribe((data: any[]) => {
         this.dataModals = data;
+      });
+
+    const routeUF = environment.api + 'uf';
+    this.service.getHttp().get(routeUF, this.service.getHeadrs())
+      .subscribe((data: any[]) => {
+        this.dataUFs = data;
       });
   }
 
@@ -80,27 +88,27 @@ export class CadastroComponent implements OnInit {
 
       // valida se a operação será para create ou update da transportadora
       if (this.transportadora.id) {
-        this.service.update('', formFormated)
-        .subscribe((transportadora: Transportadora) => {
-          console.log(transportadora);
-          alert('Transportadora cadastrada com sucesso!');
-        }, err => {
-          alert(err);
-        });
+        this.service.update(formFormated)
+          .subscribe((transportadora: Transportadora) => {
+            console.log(transportadora);
+            alert('Transportadora atualizada com sucesso!');
+          }, err => {
+            alert(err);
+          });
       } else {
-        this.service.create('', formFormated)
-        .subscribe((transportadora: Transportadora) => {
-          console.log(transportadora);
-          alert('Transportadora atualizada com sucesso!');
-        }, err => {
-          alert(err);
-        });
+        this.service.create(formFormated)
+          .subscribe((response: any) => {
+            console.log(response);
+            alert('Transportadora cadastrada com sucesso!');
+          }, err => {
+            alert(err);
+          });
       }
     }
   }
 
   deletarTransportadora(transportadora: Transportadora) {
-    this.service.delete('', transportadora.id)
+    this.service.delete(transportadora.id)
       .subscribe((resposta: any) => {
         alert('Transportadora removida com sucesso!');
       }, err => {
