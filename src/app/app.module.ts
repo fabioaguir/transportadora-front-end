@@ -9,12 +9,16 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { TransportadoraComponent } from './transportadora/transportadora.component';
 import { TransportadoraService } from './transportadora/transportadora.service';
 import { CadastroComponent } from './transportadora/cadastro/cadastro.component';
+import { TelefonePipe } from './pipes/telefone.pipe';
+import { CnpjPipe } from './pipes/cnpj.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TransportadoraComponent,
-    CadastroComponent
+    CadastroComponent,
+    TelefonePipe,
+    CnpjPipe
   ],
   imports: [
     BrowserModule,

@@ -59,14 +59,14 @@
               <div class="col-md-4">
                 <a [routerLink]="['/update', transportadora.id]">{{ transportadora.nome }}</a>
               </div>
-              <div class="col-md-4">{{ transportadora.telefone }}  {{ transportadora.celular ? '/' + transportadora.celular : ''}}</div>
+              <div class="col-md-4">{{ transportadora.telefone | telefone }}  {{ transportadora.celular ? '/' + (transportadora.celular | telefone) : ''}}</div>
               <div class="col-md-4">
-                <i class="fab fa-whatsapp"></i> Fale agora: <a href="#">{{ transportadora.whatsapp ? transportadora.whatsapp : ''}}</a>
+                <i class="fab fa-whatsapp"></i> Fale agora: <a href="#">{{ transportadora.whatsapp ? (transportadora.whatsapp | telefone) : ''}}</a>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4">
-                <p>{{ transportadora.cnpj }}</p>
+                <p>{{ transportadora.cnpj | cnpj }}</p>
               </div>
               <div class="col-md-4">{{ transportadora.email }}</div>
             </div>
