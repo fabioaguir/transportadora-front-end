@@ -27,3 +27,16 @@ img {
 .hr {
   margin-right: 30px;
 }
+
+li {
+  background-color: #d5d5d5;
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-left: -45px;
+  min-width: 50%;
+  max-width: 230px;
+}
+
+ul {
+  list-style-type: none;
+}

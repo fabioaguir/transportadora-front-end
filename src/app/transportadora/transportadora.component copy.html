@@ -1,0 +1,79 @@
+<div class="container-fluid" style="padding: 16px">
+  <div class="row topo">
+    <div class="col-md-4">
+      <h3 class="text-left titulo">Transportadoras |</h3>
+    </div>
+    <div class="col-md-8 text-right">
+      <button style="width: 30%" [routerLink]="['/cadastro']" class="btn btn-success">Cadastrar sua
+        Transportadora</button>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col-md-4">
+          <h4 class="text-left">Transportadoras</h4>
+          <p>{{ resultadosDoFiltro }} resultados</p>
+        </div>
+      </div>
+      <hr class="hr" />
+      <div class="row">
+        <div class="col-md-12">
+          <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <div class="form-group col-md-10">
+                <label for="nome">Nome</label>
+                <input type="text" formControlName="nome" class="form-control" id="nome" />
+              </div>
+              <div class="form-group col-md-10">
+                <label for="uf">Localização (UFs)</label>
+                <select id="uf" formControlName="uf" class="form-control">
+                </select>
+              </div>
+              <div class="form-group col-md-10">
+                <label for="municipio">Localização (Municípios)</label>
+                <input type="text" formControlName="cidade" class="form-control" id="municipio" />
+              </div>
+              <div class="form-group col-md-10">
+                <label for="modal">Modal</label>
+                <select id="modal" formControlName="modal" class="form-control">
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9 container-lista">
+      <ng-container *ngFor="let transportadora of listaTransportadoras">
+        <div class="row itens">
+          <div class="col-md-2">
+            <img src="/assets/imagens/hive_logo.png" class="img-fluid" />
+          </div>
+
+          <div class="col-md-10 text-body-card-list">
+            <div class="row">
+              <div class="col-md-4">
+                <a [routerLink]="['/update', transportadora.id]">{{ transportadora.nome }}</a>
+              </div>
+              <div class="col-md-4">{{ transportadora.telefone | telefone }}  {{ transportadora.celular ? '/' + (transportadora.celular | telefone) : ''}}</div>
+              <div class="col-md-4">
+                <i class="fab fa-whatsapp"></i> Fale agora: <a href="#">{{ transportadora.whatsapp ? (transportadora.whatsapp | telefone) : ''}}</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p>{{ transportadora.cnpj | cnpj }}</p>
+              </div>
+              <div class="col-md-4">{{ transportadora.email }}</div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </ng-container>
+    </div>
+  </div>
+</div>

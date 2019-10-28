@@ -27,8 +27,8 @@ export class TransportadoraService {
     return this.http.get(this.route + '/' + id, this.headers);
   }
 
-  filtro() {
-    return this.http.get(this.route, this.headers);
+  search(params: string = '') {
+    return this.http.get(this.route + '/search' + params, this.headers);
   }
 
   create(transportadora: Transportadora) {

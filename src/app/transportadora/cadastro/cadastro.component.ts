@@ -35,6 +35,7 @@ export class CadastroComponent implements OnInit {
         this.service.findById(parametros.id).subscribe((transportadora: Transportadora) => {
           this.edit(transportadora);
         }, erro => {
+          console.log(erro);
           alert(erro);
         });
       } else {
