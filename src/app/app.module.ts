@@ -6,6 +6,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
+
+
 import { TransportadoraComponent } from './transportadora/transportadora.component';
 import { TransportadoraService } from './transportadora/transportadora.service';
 import { CadastroComponent } from './transportadora/cadastro/cadastro.component';
@@ -26,7 +29,8 @@ import { CnpjPipe } from './pipes/cnpj.pipe';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxViacepModule
   ],
   providers: [
     TransportadoraService

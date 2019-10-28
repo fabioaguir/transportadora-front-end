@@ -85,13 +85,13 @@
         <div class="form-group row">
           <label for="cep" class="col-sm-2 col-form-label">CEP</label>
           <div class="col-sm-4">
-            <input type="text" formControlName="cep" [(ngModel)]="transportadora.cep" name="cep" class="form-control" id="cep">
+            <input type="text" (change)="buscarCep($event)" formControlName="cep" [(ngModel)]="transportadora.cep" name="cep" class="form-control" id="cep">
           </div>
           <label for="uf" class="col-sm-1 col-form-label">UF</label>
           <div class="col-sm-5">
             <select id="uf" formControlName="ufId" [(ngModel)]="transportadora.ufId" name="ufId" class="form-control">
               <ng-container *ngFor="let uf of dataUFs">
-                <option value="{{ uf.id }}">{{ uf.nome }}</option>
+                <option value="{{ uf.id }}">{{ uf.sigla }}</option>
               </ng-container>
             </select>
             <small *ngIf="!form.get('ufId').valid && form.get('ufId').touched" class="form-text text-danger">Campo

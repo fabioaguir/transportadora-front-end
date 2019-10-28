@@ -40,3 +40,8 @@ li {
 ul {
   list-style-type: none;
 }
+
+.itens-filtro-uf-modal {
+  margin-bottom: -18px;
+  margin-left: -12px;
+}

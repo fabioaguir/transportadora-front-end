@@ -4,6 +4,8 @@ import { Transportadora } from '../../transportadora/transportadora.model';
 import { TransportadoraService } from '../../transportadora/transportadora.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgxViacepService, ErroCep, Endereco } from '@brunoc/ngx-viacep';
+import { ExceptionSearchCep } from 'src/app/exceptions/exception-search-cep';
 
 @Component({
   selector: 'app-cadastro',
@@ -23,7 +25,8 @@ export class CadastroComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: TransportadoraService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private viacep: NgxViacepService
   ) { }
 
   ngOnInit() {
@@ -36,7 +39,7 @@ export class CadastroComponent implements OnInit {
           this.edit(transportadora);
         }, erro => {
           console.log(erro);
-          alert(erro);
+          alert(erro.error.message);
         });
       } else {
         this.modoEdit = false;
@@ -151,5 +154,19 @@ export class CadastroComponent implements OnInit {
       }, err => {
         alert(err);
       });
+  }
+
+  buscarCep(event: any) {
+    const cep = event.target.value;
+    this.viacep.buscarPorCep(cep).then( ( endereco: Endereco ) => {
+      this.form.get('cidade').setValue(endereco.localidade);
+      this.form.get('bairro').setValue(endereco.bairro);
+      this.form.get('logradouro').setValue(endereco.logradouro);
+
+      const uf = this.dataUFs.filter(item => item.sigla === endereco.uf)[0];
+      this.form.get('ufId').setValue(uf.id);
+     }).catch( (error: ErroCep) => {
+        ExceptionSearchCep.exceptions(error);
+     });
   }
 }

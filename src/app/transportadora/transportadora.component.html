@@ -68,8 +68,8 @@
               <h5>Localização (UFs)</h5>
               <div class="overflow-auto" style="min-height: 120px;">
                 <ng-container *ngFor="let uf of dataUFs">
-                  <button (click)="selecionarUfParaFiltro(uf)" style="margin-bottom: -18px; margin-left: -12px;"
-                    type="button" class="btn btn-link">{{ uf.nome }} ({{ uf.qtdTransportadoras }})
+                  <button (click)="selecionarUfParaFiltro(uf)"
+                    type="button" class="btn btn-link itens-filtro-uf-modal">{{ uf.nome }} ({{ uf.qtdTransportadoras }})
                   </button><br />
                 </ng-container>
               </div>
@@ -82,8 +82,8 @@
               <h5>Modal</h5>
               <div>
                 <ng-container *ngFor="let modal of dataModals">
-                  <button (click)="selecionarModalParaFiltro(modal)" style="margin-bottom: -18px; margin-left: -12px;"
-                    type="button" class="btn btn-link">{{ modal.nome }} ({{ modal.qtdTransportadoras }})
+                  <button (click)="selecionarModalParaFiltro(modal)"
+                    type="button" class="btn btn-link itens-filtro-uf-modal">{{ modal.nome }} ({{ modal.qtdTransportadoras }})
                   </button><br />
                 </ng-container>
               </div>

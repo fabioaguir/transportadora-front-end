@@ -1,0 +1,8 @@
+export enum ErrorValuesSearchCep {
+  CEP_NAO_ENCONTRADO,
+  CEP_VAZIO,
+  CEP_INVALIDO,
+  CEP_MUITO_CURTO,
+  CEP_MUITO_LONGO,
+  ERRO_SERVIDOR
+}
