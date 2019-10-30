@@ -23,7 +23,7 @@ O projeto é baseado em componentes
 - `pasta pipe`: Organizar os pipes da aplicação
 
 ## Dependências
-O projeto utiliza bibliotecas/APIs externas
+O projeto utiliza bibliotecas/APIs externas para algumas funcionalidades da aplicação
 
 Utilizadas:
 - @brunoc/ngx-viacep: 2.1.2,
