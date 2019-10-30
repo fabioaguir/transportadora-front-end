@@ -4,6 +4,7 @@ import { Transportadora } from '../../transportadora/transportadora.model';
 import { TransportadoraService } from '../../transportadora/transportadora.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
 import { NgxViacepService, ErroCep, Endereco } from '@brunoc/ngx-viacep';
 import { ExceptionSearchCep } from 'src/app/exceptions/exception-search-cep';
 
@@ -15,11 +16,14 @@ import { ExceptionSearchCep } from 'src/app/exceptions/exception-search-cep';
 export class CadastroComponent implements OnInit {
   public transportadora: Transportadora = new Transportadora();
   public form: FormGroup = new FormGroup({});
-  // Modo edit controla se o acesso a tela é para cadastro ou edição
+  // Variável modoEdit controla se o acesso a tela é para cadastro ou edição
   public modoEdit: boolean = false;
 
   public dataModals: any[] = [];
   public dataUFs: any[] = [];
+
+  public selectedFile;
+  public imgURL: any;
 
   constructor(
     private router: Router,
@@ -34,15 +38,16 @@ export class CadastroComponent implements OnInit {
     this.route.params.subscribe((parametros: Params) => {
       if (parametros.id) {
         this.modoEdit = true;
+        this.form.get('termo').setValidators(Validators.nullValidator);
 
         this.service.findById(parametros.id).subscribe((transportadora: Transportadora) => {
           this.edit(transportadora);
-        }, erro => {
-          console.log(erro);
-          alert(erro.error.message);
+        }, error => {
+          alert(error.error.message);
         });
       } else {
         this.modoEdit = false;
+        this.form.get('termo').setValidators(Validators.required);
       }
     });
   }
@@ -65,42 +70,22 @@ export class CadastroComponent implements OnInit {
       celular: [null],
       whatsapp: [null],
       cep: [null],
-      termo: [false],
-    });
-  }
-
-  resetarFormulario() {
-    this.transportadora = new Transportadora();
-    this.form.setValue({
-      email: null,
-      nome: null,
-      empresa: null,
-      cnpj: null,
-      telefone: null,
-      modalId: null,
-      logradouro: null,
-      numero: null,
-      bairro: null,
-      cidade: null,
-      ufId: null,
-      celular: null,
-      whatsapp: null,
-      cep: null,
-      termo: null,
+      termo: [null],
+      logo: [null],
     });
   }
 
   iniciarDadosDoFormulario() {
     const routeModal = environment.api + 'modal';
     this.service.getHttp().get(routeModal, this.service.getHeadrs())
-      .subscribe((data: any[]) => {
-        this.dataModals = data;
+      .subscribe((modals: any[]) => {
+        this.dataModals = modals;
       });
 
     const routeUF = environment.api + 'uf';
     this.service.getHttp().get(routeUF, this.service.getHeadrs())
-      .subscribe((data: any[]) => {
-        this.dataUFs = data;
+      .subscribe((ufs: any[]) => {
+        this.dataUFs = ufs;
       });
   }
 
@@ -118,20 +103,20 @@ export class CadastroComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      let formValue = Object.assign({}, this.form.value);
-      // let formFormated = Object.assign(formValue, {
-      //   termo : this.transportadora ? true : false
-      // });
+      const formValue = Object.assign({}, this.form.value);
 
       // valida se a operação será para create ou update da transportadora
       if (this.transportadora.id) {
-        formValue = Object.assign({}, this.transportadora);
+        formValue.id = this.transportadora.id;
+        formValue.termo = this.transportadora.termo;
+        formValue.logo = formValue.logo ? formValue.logo : this.transportadora.logo;
+
         this.service.update(formValue)
-          .subscribe((transportadora: Transportadora) => {
+          .subscribe((response: any) => {
             alert('Transportadora atualizada com sucesso!');
             this.router.navigate(['/transportadoras']);
-          }, err => {
-            alert(err);
+          }, error => {
+            alert(error.error);
           });
       } else {
         formValue.termo = this.transportadora.termo ? true : false;
@@ -139,8 +124,8 @@ export class CadastroComponent implements OnInit {
           .subscribe((response: any) => {
             alert('Transportadora cadastrada com sucesso!');
             this.router.navigate(['/transportadoras']);
-          }, err => {
-            alert(err);
+          }, error => {
+            alert(error.error);
           });
       }
     }
@@ -148,25 +133,37 @@ export class CadastroComponent implements OnInit {
 
   deletar(transportadora: Transportadora) {
     this.service.delete(transportadora.id)
-      .subscribe((resposta: any) => {
+      .subscribe((response: any) => {
         alert('Transportadora removida com sucesso!');
         this.router.navigate(['/transportadoras']);
-      }, err => {
-        alert(err);
+      }, error => {
+        alert(error.error);
       });
   }
 
   buscarCep(event: any) {
     const cep = event.target.value;
-    this.viacep.buscarPorCep(cep).then( ( endereco: Endereco ) => {
+    this.viacep.buscarPorCep(cep).then((endereco: Endereco) => {
       this.form.get('cidade').setValue(endereco.localidade);
       this.form.get('bairro').setValue(endereco.bairro);
       this.form.get('logradouro').setValue(endereco.logradouro);
 
       const uf = this.dataUFs.filter(item => item.sigla === endereco.uf)[0];
       this.form.get('ufId').setValue(uf.id);
-     }).catch( (error: ErroCep) => {
-        ExceptionSearchCep.exceptions(error);
-     });
+    }).catch((error: ErroCep) => {
+      ExceptionSearchCep.exceptions(error);
+    });
   }
+
+  public onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.form.get('logo').setValue(reader.result);
+      this.imgURL = reader.result;
+    };
+  }
+
 }

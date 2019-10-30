@@ -4,8 +4,8 @@
       <h3 class="text-left titulo">Transportadoras |</h3>
     </div>
     <div class="col-md-8 text-right">
-      <button style="width: 30%" [routerLink]="['/cadastrarTransportadora']" class="btn btn-success">Cadastrar sua
-        Transportadora</button>
+      <button style="width: 30%" [routerLink]="['/cadastrarTransportadora']" class="btn btn-success">
+        Cadastrar sua Transportadora</button>
     </div>
   </div>
   <hr />
@@ -68,22 +68,23 @@
               <h5>Localização (UFs)</h5>
               <div class="overflow-auto" style="min-height: 120px;">
                 <ng-container *ngFor="let uf of dataUFs">
-                  <button (click)="selecionarUfParaFiltro(uf)"
-                    type="button" class="btn btn-link itens-filtro-uf-modal">{{ uf.nome }} ({{ uf.qtdTransportadoras }})
+                  <button (click)="selecionarUfParaFiltro(uf)" type="button"
+                    class="btn btn-link itens-filtro-uf-modal">{{ uf.nome }} ({{ uf.qtdTransportadoras }})
                   </button><br />
                 </ng-container>
               </div>
             </div>
             <div class="form-group col-md-10">
               <h5 style="margin-top: 10px;">Localização (Municípios)</h5>
-              <input type="text" (keydown.enter)="pesquisarPorMunicipio($event)" class="form-control" name="municipio" id="municipio" />
+              <input type="text" (keydown.enter)="pesquisarPorMunicipio($event)" class="form-control" name="municipio"
+                id="municipio" />
             </div>
             <div class="form-group col-md-10">
               <h5>Modal</h5>
               <div>
                 <ng-container *ngFor="let modal of dataModals">
-                  <button (click)="selecionarModalParaFiltro(modal)"
-                    type="button" class="btn btn-link itens-filtro-uf-modal">{{ modal.nome }} ({{ modal.qtdTransportadoras }})
+                  <button (click)="selecionarModalParaFiltro(modal)" type="button"
+                    class="btn btn-link itens-filtro-uf-modal">{{ modal.nome }} ({{ modal.qtdTransportadoras }})
                   </button><br />
                 </ng-container>
               </div>
@@ -94,35 +95,52 @@
     </div>
 
     <div class="col-md-9 container-lista">
-      <ng-container *ngFor="let transportadora of listaTransportadoras">
-        <div class="row itens">
-          <div class="col-md-2">
-            <img src="/assets/imagens/hive_logo.png" class="img-fluid" />
-          </div>
+      <ng-container *ngIf="listaTransportadoras.length > 0 else nenhumResultado">
+        <ng-container *ngFor="let transportadora of listaTransportadoras | paginate: { itemsPerPage: 5, currentPage: paginaAtual }; let i = index">
+          <div class="row itens">
+            <div class="col-md-2">
+              <img src="{{ transportadora.logo ? transportadora.logo : '/assets/imagens/logo_vazia.png' }}"
+                class="img-fluid rounded" />
+            </div>
 
-          <div class="col-md-10 text-body-card-list">
-            <div class="row">
-              <div class="col-md-4">
-                <a [routerLink]="['/atualizarTransportadora', transportadora.id]">{{ transportadora.nome }}</a>
+            <div class="col-md-10 text-body-card-list">
+              <div class="row">
+                <div class="col-md-4">
+                  <a [routerLink]="['/atualizarTransportadora', transportadora.id]">{{ transportadora.nome }}</a>
+                </div>
+                <div class="col-md-4">{{ transportadora.telefone | telefone }}
+                  {{ transportadora.celular ? ' / ' + (transportadora.celular | telefone) : ''}}
+                </div>
+                <div class="col-md-4">
+                  <i class="fab fa-whatsapp"></i> Fale agora:
+                  <a target="_blanck" href="https://api.whatsapp.com/send?1=pt_BR&phone=55{{ transportadora.whatsapp ? (transportadora.whatsapp) : ''}}">
+                    {{ transportadora.whatsapp ? (transportadora.whatsapp | telefone) : ''}}</a>
+                </div>
               </div>
-              <div class="col-md-4">{{ transportadora.telefone | telefone }}
-                {{ transportadora.celular ? '/' + (transportadora.celular | telefone) : ''}}
-              </div>
-              <div class="col-md-4">
-                <i class="fab fa-whatsapp"></i> Fale agora:
-                <a href="#">{{ transportadora.whatsapp ? (transportadora.whatsapp | telefone) : ''}}</a>
+              <div class="row">
+                <div class="col-md-4">
+                  <p>{{ transportadora.cnpj | cnpj }}</p>
+                </div>
+                <div class="col-md-4">{{ transportadora.email }}</div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4">
-                <p>{{ transportadora.cnpj | cnpj }}</p>
-              </div>
-              <div class="col-md-4">{{ transportadora.email }}</div>
-            </div>
+          </div>
+          <br />
+        </ng-container>
+        <div class="row text-center">
+          <div class="col-md-12">
+            <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo">
+            </pagination-controls>
           </div>
         </div>
-        <br />
       </ng-container>
+      <ng-template #nenhumResultado>
+        <div class="row text-center">
+          <div class="col-md-12">
+            <p>Nenhuma transportadora encontrada</p>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

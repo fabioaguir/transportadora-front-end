@@ -11,29 +11,30 @@
 <div class="container" style="padding: 16px; width: 30%;">
   <div class="row">
     <div class="col-md-12">
-      <form *ngIf="form" [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+      <form *ngIf="form" [formGroup]="form" novalidate (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
           <div class="col-sm-10">
-            <input type="email" formControlName="email" [(ngModel)]="transportadora.email" name="email" class="form-control"
-              id="email">
-            <small *ngIf="!form.get('email').valid && form.get('email').touched" class="form-text text-danger">E-mail
-              inválido ou não informado</small>
+            <input type="email" formControlName="email" required [(ngModel)]="transportadora.email" name="email"
+              class="form-control" id="email">
+            <small *ngIf="!form.get('email').valid && form.get('email').touched" class="form-text text-danger">
+              E-mail inválido ou não informado</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="nome" class="col-sm-2 col-form-label">Nome:</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="nome" [(ngModel)]="transportadora.nome" name="nome" class="form-control" id="nome">
-            <small *ngIf="!form.get('nome').valid && form.get('nome').touched" class="form-text text-danger">Campo
-              obrigatótio</small>
+            <input type="text" formControlName="nome" [(ngModel)]="transportadora.nome" name="nome" class="form-control"
+              id="nome">
+            <small *ngIf="!form.get('nome').valid && form.get('nome').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="empresa" class="col-sm-2 col-form-label">Empresa:</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="empresa" [(ngModel)]="transportadora.empresa" name="empresa" class="form-control"
-              id="empresa">
+            <input type="text" formControlName="empresa" [(ngModel)]="transportadora.empresa" name="empresa"
+              class="form-control" id="empresa">
             <small *ngIf="!form.get('empresa').valid && form.get('empresa').touched"
               class="form-text text-danger">Empresa com menos de 4 caracteres ou não informada</small>
           </div>
@@ -43,15 +44,15 @@
           <div class="col-sm-10">
             <input type="text" formControlName="cnpj" [(ngModel)]="transportadora.cnpj" name="cnpj" class="form-control"
               id="cnpj">
-            <small *ngIf="!form.get('cnpj').valid && form.get('cnpj').touched"
-              class="form-text text-danger">Campo obrigatótio</small>
+            <small *ngIf="!form.get('cnpj').valid && form.get('cnpj').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="telefone" class="col-sm-2 col-form-label">Telefone:</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="telefone" [(ngModel)]="transportadora.telefone" name="telefone" class="form-control"
-              id="telefone">
+            <input type="text" formControlName="telefone" [(ngModel)]="transportadora.telefone" name="telefone"
+              class="form-control" id="telefone">
             <small *ngIf="!form.get('telefone').valid && form.get('telefone').touched"
               class="form-text text-danger">Campo obrigatótio</small>
           </div>
@@ -59,33 +60,35 @@
         <div class="form-group row">
           <label for="celular" class="col-sm-2 col-form-label">Celular:</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="celular" [(ngModel)]="transportadora.celular" name="celular" class="form-control"
-              id="celular">
+            <input type="text" formControlName="celular" [(ngModel)]="transportadora.celular" name="celular"
+              class="form-control" id="celular">
           </div>
         </div>
         <div class="form-group row">
           <label for="whatsapp" class="col-sm-2 col-form-label">Whatsapp</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="whatsapp" [(ngModel)]="transportadora.whatsapp" name="whatsapp" class="form-control"
-              id="whatsapp">
+            <input type="text" formControlName="whatsapp" [(ngModel)]="transportadora.whatsapp" name="whatsapp"
+              class="form-control" id="whatsapp">
           </div>
         </div>
         <div class="form-group row">
           <label for="modal" class="col-sm-2 col-form-label">Modal</label>
           <div class="col-sm-10">
-            <select id="uf" formControlName="modalId" [(ngModel)]="transportadora.modalId" name="modalId" class="form-control">
+            <select id="uf" formControlName="modalId" [(ngModel)]="transportadora.modalId" name="modalId"
+              class="form-control">
               <ng-container *ngFor="let modal of dataModals">
                 <option value="{{ modal.id }}">{{ modal.nome }}</option>
               </ng-container>
             </select>
-            <small *ngIf="!form.get('modalId').valid && form.get('modalId').touched"
-              class="form-text text-danger">Campo obrigatótio</small>
+            <small *ngIf="!form.get('modalId').valid && form.get('modalId').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="cep" class="col-sm-2 col-form-label">CEP</label>
           <div class="col-sm-4">
-            <input type="text" (change)="buscarCep($event)" formControlName="cep" [(ngModel)]="transportadora.cep" name="cep" class="form-control" id="cep">
+            <input type="text" (change)="buscarCep($event)" formControlName="cep" [(ngModel)]="transportadora.cep"
+              name="cep" class="form-control" id="cep">
           </div>
           <label for="uf" class="col-sm-1 col-form-label">UF</label>
           <div class="col-sm-5">
@@ -94,33 +97,33 @@
                 <option value="{{ uf.id }}">{{ uf.sigla }}</option>
               </ng-container>
             </select>
-            <small *ngIf="!form.get('ufId').valid && form.get('ufId').touched" class="form-text text-danger">Campo
-              obrigatótio</small>
+            <small *ngIf="!form.get('ufId').valid && form.get('ufId').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="cidade" class="col-sm-2 col-form-label">Cidade</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="cidade" [(ngModel)]="transportadora.cidade" name="cidade" class="form-control"
-              id="cidade">
-            <small *ngIf="!form.get('cidade').valid && form.get('cidade').touched" class="form-text text-danger">Campo
-              obrigatótio</small>
+            <input type="text" formControlName="cidade" [(ngModel)]="transportadora.cidade" name="cidade"
+              class="form-control" id="cidade">
+            <small *ngIf="!form.get('cidade').valid && form.get('cidade').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="bairro" class="col-sm-2 col-form-label">Bairro</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="bairro" [(ngModel)]="transportadora.bairro" name="bairro" class="form-control"
-              id="bairro">
-            <small *ngIf="!form.get('bairro').valid && form.get('bairro').touched" class="form-text text-danger">Campo
-              obrigatótio</small>
+            <input type="text" formControlName="bairro" [(ngModel)]="transportadora.bairro" name="bairro"
+              class="form-control" id="bairro">
+            <small *ngIf="!form.get('bairro').valid && form.get('bairro').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
           </div>
         </div>
         <div class="form-group row">
           <label for="logradouro" class="col-sm-2 col-form-label">Rua/Avenida</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="logradouro" [(ngModel)]="transportadora.logradouro" name="logradouro" class="form-control"
-              id="logradouro">
+            <input type="text" formControlName="logradouro" [(ngModel)]="transportadora.logradouro" name="logradouro"
+              class="form-control" id="logradouro">
             <small *ngIf="!form.get('logradouro').valid && form.get('logradouro').touched"
               class="form-text text-danger">Campo obrigatótio</small>
           </div>
@@ -128,16 +131,25 @@
         <div class="form-group row">
           <label for="numero" class="col-sm-2 col-form-label">Número</label>
           <div class="col-sm-10">
-            <input type="text" formControlName="numero" [(ngModel)]="transportadora.numero" name="numero" class="form-control"
-              id="numero">
-            <small *ngIf="!form.get('numero').valid && form.get('numero').touched" class="form-text text-danger">Campo
-              obrigatótio</small>
+            <input type="text" formControlName="numero" [(ngModel)]="transportadora.numero" name="numero"
+              class="form-control" id="numero">
+            <small *ngIf="!form.get('numero').valid && form.get('numero').touched" class="form-text text-danger">
+              Campo obrigatótio</small>
+          </div>
+        </div>
+        <div class="col-md-12 text-center" *ngIf="imgURL || transportadora.logo">
+            <img [src]="imgURL ? imgURL : transportadora.logo" class="img-fluid rounded mx-auto img-logo">
+        </div>
+        <div class="form-group row">
+          <label for="numero" class="col-sm-2 col-form-label">Logo</label>
+          <div class="col-sm-10">
+            <input type="file" name="logo" (change)="onFileChanged($event)" class="form-control-file" id="logo">
           </div>
         </div>
         <div class="col-md-12 text-center" *ngIf="!modoEdit">
           <div class="form-check">
-            <input class="form-check-input" formControlName="termo" [(ngModel)]="transportadora.termo" name="termo"  type="checkbox"
-              id="gridCheck">
+            <input class="form-check-input" *ngIf="!modoEdit" formControlName="termo" [(ngModel)]="transportadora.termo" name="termo"
+              type="checkbox" id="gridCheck">
             <label class="form-check-label" for="gridCheck">
               Eu aceito os termos de serviço
             </label>
@@ -145,11 +157,12 @@
         </div>
         <br />
         <div class="col-md-12 text-center" *ngIf="!modoEdit">
-          <button style="width: 60%" type="submit" class="btn btn-primary">Cadastrar sua Transportadora</button>
+          <button style="width: 60%" type="submit" [disabled]="!form.valid" class="btn btn-primary">Cadastrar sua Transportadora</button>
         </div>
         <div class="col-md-12 text-center" *ngIf="modoEdit">
-          <button style="width: 40%; margin-right: 10px;" type="submit" class="btn btn-primary">Atualizar</button>
-          <button style="width: 40%" type="button" (click)="deletar(transportadora)" class="btn btn-danger">Deletar</button>
+          <button style="width: 40%; margin-right: 10px;" [disabled]="!form.valid" type="submit" class="btn btn-primary">Atualizar</button>
+          <button style="width: 40%" type="button" (click)="deletar(transportadora)"
+            class="btn btn-danger">Deletar</button>
         </div>
       </form>
     </div>

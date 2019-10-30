@@ -15,6 +15,7 @@ export class Transportadora {
   logradouro: string = null;
   numero: string = null;
   termo: boolean = null;
+  logo: any = null;
   modal: any = null;
   uf: any = null;
 }
