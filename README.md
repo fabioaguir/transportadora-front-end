@@ -19,7 +19,7 @@ cadastrar para que a mesma possa ser consultada, aparecendo na listagem principa
 O projeto é baseado em componentes
 
 - `pasta enuns`: Organizar os enuns da aplicação
-- `pasta exceptions`:  Organizar as classes utilizadas trabalhar regras para mensagens de exceções
+- `pasta exceptions`:  Organizar as classes utilizadas para trabalhar regras para mensagens de exceções
 - `pasta pipe`: Organizar os pipes da aplicação
 
 ## Dependências
