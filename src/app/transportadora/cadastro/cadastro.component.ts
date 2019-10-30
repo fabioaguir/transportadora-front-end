@@ -49,6 +49,7 @@ export class CadastroComponent implements OnInit {
           this.edit(transportadora);
         }, error => {
           alert(error.error.message);
+          this.router.navigate(['/transportadoras']);
         });
       } else {
         this.modoEdit = false;
@@ -77,6 +78,8 @@ export class CadastroComponent implements OnInit {
       cep: [null],
       termo: [null],
       logo: [null],
+      modal: [null],
+      uf: [null]
     });
   }
 
@@ -97,11 +100,11 @@ export class CadastroComponent implements OnInit {
   edit(transportadora: Transportadora) {
     this.transportadora = Object.assign({}, transportadora);
 
-    if (this.transportadora.modal.id) {
+    if (this.transportadora.modal) {
       this.form.get('modalId').setValue(this.transportadora.modal.id);
     }
 
-    if (this.transportadora.uf.id) {
+    if (this.transportadora.uf) {
       this.form.get('ufId').setValue(this.transportadora.uf.id);
     }
   }
@@ -115,7 +118,9 @@ export class CadastroComponent implements OnInit {
         const formFormated = Object.assign(formValue, {
           id : this.transportadora.id,
           termo: this.transportadora.termo,
-          logo: formValue.logo ? formValue.logo : this.transportadora.logo
+          logo: formValue.logo ? formValue.logo : this.transportadora.logo,
+          modal: this.dataModals.filter(item => item.id == formValue.modalId)[0],
+          uf: this.dataUFs.filter(item => item.id == formValue.ufId)[0],
         });
 
         this.service.update(formFormated)
@@ -128,6 +133,8 @@ export class CadastroComponent implements OnInit {
       } else {
         const formFormated = Object.assign(formValue, {
           termo: this.transportadora.termo ? true : false,
+          modal: this.dataModals.filter(item => item.id == formValue.modalId)[0],
+          uf: this.dataUFs.filter(item => item.id == formValue.ufId)[0],
         });
 
         this.service.create(formFormated)
