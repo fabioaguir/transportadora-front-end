@@ -122,13 +122,4 @@ export class TransportadoraComponent implements OnInit {
     this.search();
   }
 
-  // createHtmlItemFilter(name: string, callBack: () => boolean) {
-  //   const paramsFilter = document.querySelector('#paramsFilter');
-  //   const html = `<li style="margin-top: 5px">;
-  //                 <button type="button" (click)="${callBack}" style="margin-top: -2px;" class="close" aria-label="Close">
-  //                   <span aria-hidden="true">&times;</span>
-  //                 </button><span>${name}</span>
-  //               </li>`;
-  //   paramsFilter.append(html);
-  // }
 }
