@@ -25,6 +25,10 @@ O projeto é baseado em componentes
 ## Dependências
 O projeto utiliza bibliotecas/APIs externas para algumas funcionalidades da aplicação
 
+## Instalação
+Clonar o projeto do repositório `https://github.com/fabioaguir/transportadora-front-end.git` no GitHub,
+e executar na pasta do projeto o comando `npm install` para instalar as dependências
+
 Utilizadas:
 - `@brunoc/ngx-viacep: 2.1.2`: Para consulta de cep via api externa
 - `ngx-pagination: 4.1.0`: Para paginação dos resultados na tela de listagem do sistema
