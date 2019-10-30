@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxViacepModule } from '@brunoc/ngx-viacep';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 
 import { TransportadoraComponent } from './transportadora/transportadora.component';
 import { TransportadoraService } from './transportadora/transportadora.service';
@@ -28,7 +29,8 @@ import { CnpjPipe } from './pipes/cnpj.pipe';
     FormsModule,
     AppRoutingModule,
     NgxPaginationModule,
-    NgxViacepModule
+    NgxViacepModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     TransportadoraService

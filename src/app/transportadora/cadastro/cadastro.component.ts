@@ -30,6 +30,10 @@ export class CadastroComponent implements OnInit {
     'image/png'
   ];
 
+  public dropdownModalList = [];
+  public selectedModalItems = [];
+  public dropdownSettings = {};
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -67,7 +71,6 @@ export class CadastroComponent implements OnInit {
       empresa: [null, [Validators.required, Validators.minLength(4)]],
       cnpj: [null, [Validators.required]],
       telefone: [null, [Validators.required]],
-      modalId: [null, [Validators.required]],
       logradouro: [null, [Validators.required]],
       numero: [null, [Validators.required]],
       bairro: [null, [Validators.required]],
@@ -78,12 +81,23 @@ export class CadastroComponent implements OnInit {
       cep: [null],
       termo: [null],
       logo: [null],
-      modal: [null],
+      modal: [null, [Validators.required]],
       uf: [null]
     });
   }
 
   initDataForm() {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'nome',
+      selectAllText: 'Selecionar todos',
+      unSelectAllText: 'Desmarcar todos',
+      searchPlaceholderText: 'Pesquisar',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+
     const routeModal = environment.api + 'modal';
     this.service.getHttp().get(routeModal, this.service.getHeadrs())
       .subscribe((modals: any[]) => {
@@ -101,7 +115,7 @@ export class CadastroComponent implements OnInit {
     this.transportadora = Object.assign({}, transportadora);
 
     if (this.transportadora.modal) {
-      this.form.get('modalId').setValue(this.transportadora.modal.id);
+      this.selectedModalItems = this.transportadora.modal.slice();
     }
 
     if (this.transportadora.uf) {
@@ -119,7 +133,6 @@ export class CadastroComponent implements OnInit {
           id : this.transportadora.id,
           termo: this.transportadora.termo,
           logo: formValue.logo ? formValue.logo : this.transportadora.logo,
-          modal: this.dataModals.filter(item => item.id == formValue.modalId)[0],
           uf: this.dataUFs.filter(item => item.id == formValue.ufId)[0],
         });
 
@@ -133,7 +146,6 @@ export class CadastroComponent implements OnInit {
       } else {
         const formFormated = Object.assign(formValue, {
           termo: this.transportadora.termo ? true : false,
-          modal: this.dataModals.filter(item => item.id == formValue.modalId)[0],
           uf: this.dataUFs.filter(item => item.id == formValue.ufId)[0],
         });
 
@@ -193,4 +205,22 @@ export class CadastroComponent implements OnInit {
     };
   }
 
+  onModalItemSelect(event: any) {
+    this.dropdownModalList.push(event);
+    this.dropdownModalList = this.dropdownModalList.slice();
+  }
+
+  onModalSelectAll(items: any[]) {
+    this.dropdownModalList = items.slice();
+  }
+
+  onModalDeSelectAll(items: any[]) {
+    this.dropdownModalList = items.slice();
+  }
+
+  onModalDeSelect(event: any) {
+    const filter = this.dropdownModalList.filter(item => item.id === event.id)[0];
+    this.dropdownModalList.splice(this.dropdownModalList.indexOf(filter), 1);
+    this.dropdownModalList = this.dropdownModalList.slice();
+  }
 }

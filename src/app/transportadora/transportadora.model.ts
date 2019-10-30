@@ -7,7 +7,6 @@ export class Transportadora {
   telefone: string = null;
   celular: string = null;
   whatsapp: string = null;
-  modalId: number = null;
   cep: string = null;
   ufId: number = null;
   cidade: string = null;
