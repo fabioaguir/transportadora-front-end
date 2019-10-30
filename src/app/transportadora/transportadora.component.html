@@ -19,10 +19,10 @@
       </div>
       <div class="row">
         <div class="col-md-8">
-          <ul>
+          <ul id="paramsFilter">
             <ng-container *ngIf="nomeParaPesquisa">
               <li style="margin-top: 5px;">
-                <button type="button" (click)="removerNomeDaPesquisa()" style="margin-top: -2px;" class="close"
+                <button type="button" (click)="onRemoveNomeFilter()" style="margin-top: -2px;" class="close"
                   aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button><span>{{ nomeParaPesquisa }}</span>
@@ -30,7 +30,7 @@
             </ng-container>
             <ng-container *ngIf="municipioParaPesquisa">
               <li style="margin-top: 5px;">
-                <button type="button" (click)="removerMunicipioDaPesquisa()" style="margin-top: -2px;" class="close"
+                <button type="button" (click)="onRemoveMunicipioFilter()" style="margin-top: -2px;" class="close"
                   aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button><span>{{ municipioParaPesquisa }}</span>
@@ -38,7 +38,7 @@
             </ng-container>
             <ng-container *ngFor="let uf of listaUfSelecionadas">
               <li style="margin-top: 5px;">
-                <button type="button" (click)="removerUfDoFiltro(uf)" style="margin-top: -2px;" class="close"
+                <button type="button" (click)="onRemoveUfFilter(uf)" style="margin-top: -2px;" class="close"
                   aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button><span>{{ uf.nome }}</span>
@@ -46,7 +46,7 @@
             </ng-container>
             <ng-container *ngFor="let modal of listaModalSelecionadas">
               <li style="margin-top: 5px;">
-                <button type="button" (click)="removerModalDoFiltro(modal)" style="margin-top: -2px;" class="close"
+                <button type="button" (click)="onRemoveModalFilter(modal)" style="margin-top: -2px;" class="close"
                   aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button><span>{{ modal.nome }}</span>
@@ -61,14 +61,14 @@
           <div class="form-row">
             <div class="form-group col-md-10">
               <h5>Nome</h5>
-              <input type="text" (keydown.enter)="pesquisarPorNome($event)" name="nome" class="form-control"
+              <input type="text" (keydown.enter)="onAddNomeFilter($event)" name="nome" class="form-control"
                 id="nome" />
             </div>
             <div class="form-group col-md-10">
               <h5>Localização (UFs)</h5>
               <div class="overflow-auto" style="min-height: 120px;">
                 <ng-container *ngFor="let uf of dataUFs">
-                  <button (click)="selecionarUfParaFiltro(uf)" type="button"
+                  <button (click)="onAddUfForFilter(uf)" type="button"
                     class="btn btn-link itens-filtro-uf-modal">{{ uf.nome }} ({{ uf.qtdTransportadoras }})
                   </button><br />
                 </ng-container>
@@ -76,14 +76,14 @@
             </div>
             <div class="form-group col-md-10">
               <h5 style="margin-top: 10px;">Localização (Municípios)</h5>
-              <input type="text" (keydown.enter)="pesquisarPorMunicipio($event)" class="form-control" name="municipio"
+              <input type="text" (keydown.enter)="onAddMunicipioFilter($event)" class="form-control" name="municipio"
                 id="municipio" />
             </div>
             <div class="form-group col-md-10">
               <h5>Modal</h5>
               <div>
                 <ng-container *ngFor="let modal of dataModals">
-                  <button (click)="selecionarModalParaFiltro(modal)" type="button"
+                  <button (click)="onAddModalForFilter(modal)" type="button"
                     class="btn btn-link itens-filtro-uf-modal">{{ modal.nome }} ({{ modal.qtdTransportadoras }})
                   </button><br />
                 </ng-container>

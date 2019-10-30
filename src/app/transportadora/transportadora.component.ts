@@ -27,11 +27,11 @@ export class TransportadoraComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.iniciarDadosDoFiltro();
+    this.initDataFilter();
     this.search();
   }
 
-  iniciarDadosDoFiltro() {
+  initDataFilter() {
     const routeModal = environment.api + 'modal/searchForParamsFilter';
     this.service.getHttp().get(routeModal, this.service.getHeadrs())
       .subscribe((modals: any[]) => {
@@ -46,8 +46,8 @@ export class TransportadoraComponent implements OnInit {
   }
 
   search() {
-    const parametros = this.parametrosDaPesquisa();
-    this.service.search(parametros)
+    const params = this.paramsUrlForSearch();
+    this.service.search(params)
       .subscribe((listaTransportadoras: Transportadora[]) => {
         this.listaTransportadoras = listaTransportadoras.slice();
         this.resultadosDoFiltro = this.listaTransportadoras.length;
@@ -56,21 +56,21 @@ export class TransportadoraComponent implements OnInit {
       });
   }
 
-  parametrosDaPesquisa() {
+  private paramsUrlForSearch() {
     const ufs = this.listaUfSelecionadas.map(item => item.id).join(',');
     const modals = this.listaModalSelecionadas.map(item => item.id).join(',');
     const nome = this.nomeParaPesquisa ? encodeURIComponent(this.nomeParaPesquisa) : '';
     const municipio = this.municipioParaPesquisa ? encodeURIComponent(this.municipioParaPesquisa) : '';
 
     if (ufs || modals || nome || municipio) {
-      const parametros = '/?nome=' + nome + '&cidade=' + municipio + '&ufs=' + ufs + '&modals=' + modals;
-      return parametros;
+      const params = '/?nome=' + nome + '&cidade=' + municipio + '&ufs=' + ufs + '&modals=' + modals;
+      return params;
     } else {
       return '';
     }
   }
 
-  selecionarUfParaFiltro(uf: any) {
+  onAddUfForFilter(uf: any) {
     const filter = this.listaUfSelecionadas.filter(item => item.id === uf.id)[0];
     if (!filter) {
       this.listaUfSelecionadas.push(uf);
@@ -79,14 +79,14 @@ export class TransportadoraComponent implements OnInit {
     }
   }
 
-  removerUfDoFiltro(uf: any) {
+  onRemoveUfFilter(uf: any) {
     const filter = this.listaUfSelecionadas.filter(item => item.id === uf.id)[0];
     this.listaUfSelecionadas.splice(this.listaUfSelecionadas.indexOf(filter), 1);
     this.listaUfSelecionadas = this.listaUfSelecionadas.slice();
     this.search();
   }
 
-  selecionarModalParaFiltro(modal: any) {
+  onAddModalForFilter(modal: any) {
     const filter = this.listaModalSelecionadas.filter(item => item.id === modal.id)[0];
     if (!filter) {
       this.listaModalSelecionadas.push(modal);
@@ -95,30 +95,40 @@ export class TransportadoraComponent implements OnInit {
     }
   }
 
-  removerModalDoFiltro(modal: any) {
+  onRemoveModalFilter(modal: any) {
     const filter = this.listaModalSelecionadas.filter(item => item.id === modal.id)[0];
     this.listaModalSelecionadas.splice(this.listaModalSelecionadas.indexOf(filter), 1);
     this.listaModalSelecionadas = this.listaModalSelecionadas.slice();
     this.search();
   }
 
-  pesquisarPorNome(event: any) {
+  onAddNomeFilter(event: any) {
     this.nomeParaPesquisa = event.target.value;
     this.search();
   }
 
-  removerNomeDaPesquisa(event: any) {
+  onRemoveNomeFilter(event: any) {
     this.nomeParaPesquisa = null;
     this.search();
   }
 
-  pesquisarPorMunicipio(event: any) {
+  onAddMunicipioFilter(event: any) {
     this.municipioParaPesquisa = event.target.value;
     this.search();
   }
 
-  removerMunicipioDaPesquisa(event: any) {
+  onRemoveMunicipioFilter(event: any) {
     this.municipioParaPesquisa = null;
     this.search();
   }
+
+  // createHtmlItemFilter(name: string, callBack: () => boolean) {
+  //   const paramsFilter = document.querySelector('#paramsFilter');
+  //   const html = `<li style="margin-top: 5px">;
+  //                 <button type="button" (click)="${callBack}" style="margin-top: -2px;" class="close" aria-label="Close">
+  //                   <span aria-hidden="true">&times;</span>
+  //                 </button><span>${name}</span>
+  //               </li>`;
+  //   paramsFilter.append(html);
+  // }
 }

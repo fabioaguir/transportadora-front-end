@@ -24,6 +24,11 @@ export class CadastroComponent implements OnInit {
 
   public selectedFile;
   public imgURL: any;
+  private sizeFile = 2097152;
+  private formatFile = [
+    'image/jpeg',
+    'image/png'
+  ];
 
   constructor(
     private router: Router,
@@ -34,13 +39,13 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.iniciarFormulario();
-    this.route.params.subscribe((parametros: Params) => {
-      if (parametros.id) {
+    this.initForm();
+    this.route.params.subscribe((params: Params) => {
+      if (params.id) {
         this.modoEdit = true;
         this.form.get('termo').setValidators(Validators.nullValidator);
 
-        this.service.findById(parametros.id).subscribe((transportadora: Transportadora) => {
+        this.service.findById(params.id).subscribe((transportadora: Transportadora) => {
           this.edit(transportadora);
         }, error => {
           alert(error.error.message);
@@ -52,8 +57,8 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  iniciarFormulario() {
-    this.iniciarDadosDoFormulario();
+  initForm() {
+    this.initDataForm();
 
     this.form = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
@@ -75,7 +80,7 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  iniciarDadosDoFormulario() {
+  initDataForm() {
     const routeModal = environment.api + 'modal';
     this.service.getHttp().get(routeModal, this.service.getHeadrs())
       .subscribe((modals: any[]) => {
@@ -101,17 +106,19 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSave() {
     if (this.form.valid) {
       const formValue = Object.assign({}, this.form.value);
 
       // valida se a operação será para create ou update da transportadora
       if (this.transportadora.id) {
-        formValue.id = this.transportadora.id;
-        formValue.termo = this.transportadora.termo;
-        formValue.logo = formValue.logo ? formValue.logo : this.transportadora.logo;
+        const formFormated = Object.assign(formValue, {
+          id : this.transportadora.id,
+          termo: this.transportadora.termo,
+          logo: formValue.logo ? formValue.logo : this.transportadora.logo
+        });
 
-        this.service.update(formValue)
+        this.service.update(formFormated)
           .subscribe((response: any) => {
             alert('Transportadora atualizada com sucesso!');
             this.router.navigate(['/transportadoras']);
@@ -119,8 +126,11 @@ export class CadastroComponent implements OnInit {
             alert(error.error);
           });
       } else {
-        formValue.termo = this.transportadora.termo ? true : false;
-        this.service.create(formValue)
+        const formFormated = Object.assign(formValue, {
+          termo: this.transportadora.termo ? true : false,
+        });
+
+        this.service.create(formFormated)
           .subscribe((response: any) => {
             alert('Transportadora cadastrada com sucesso!');
             this.router.navigate(['/transportadoras']);
@@ -131,7 +141,7 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  deletar(transportadora: Transportadora) {
+  onDelete(transportadora: Transportadora) {
     this.service.delete(transportadora.id)
       .subscribe((response: any) => {
         alert('Transportadora removida com sucesso!');
@@ -141,7 +151,7 @@ export class CadastroComponent implements OnInit {
       });
   }
 
-  buscarCep(event: any) {
+  onSearchCep(event: any) {
     const cep = event.target.value;
     this.viacep.buscarPorCep(cep).then((endereco: Endereco) => {
       this.form.get('cidade').setValue(endereco.localidade);
@@ -155,11 +165,21 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  public onFileChanged(event) {
+  onFileChanged(event: any) {
     this.selectedFile = event.target.files[0];
 
+    if (!this.formatFile.find(item => item === this.selectedFile.type)) {
+      alert('Tipo de arquivo não permitido!');
+      return;
+    }
+
+    if (this.sizeFile < this.selectedFile.size) {
+      alert('Tamanho do arquivo ultrapassa limite permitido de 2MB!');
+      return;
+    }
+
     const reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
+    reader.readAsDataURL(this.selectedFile);
     reader.onload = (event2) => {
       this.form.get('logo').setValue(reader.result);
       this.imgURL = reader.result;

@@ -13,7 +13,6 @@ import { TransportadoraService } from './transportadora/transportadora.service';
 import { CadastroComponent } from './transportadora/cadastro/cadastro.component';
 import { TelefonePipe } from './pipes/telefone.pipe';
 import { CnpjPipe } from './pipes/cnpj.pipe';
-
 @NgModule({
   declarations: [
     AppComponent,

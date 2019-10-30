@@ -11,11 +11,11 @@
 <div class="container" style="padding: 16px; width: 30%;">
   <div class="row">
     <div class="col-md-12">
-      <form *ngIf="form" [formGroup]="form" novalidate (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSave()" enctype="multipart/form-data">
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
           <div class="col-sm-10">
-            <input type="email" formControlName="email" required [(ngModel)]="transportadora.email" name="email"
+            <input type="email" formControlName="email" [(ngModel)]="transportadora.email" name="email"
               class="form-control" id="email">
             <small *ngIf="!form.get('email').valid && form.get('email').touched" class="form-text text-danger">
               E-mail inválido ou não informado</small>
@@ -87,7 +87,7 @@
         <div class="form-group row">
           <label for="cep" class="col-sm-2 col-form-label">CEP</label>
           <div class="col-sm-4">
-            <input type="text" (change)="buscarCep($event)" formControlName="cep" [(ngModel)]="transportadora.cep"
+            <input type="text" (change)="onSearchCep($event)" formControlName="cep" [(ngModel)]="transportadora.cep"
               name="cep" class="form-control" id="cep">
           </div>
           <label for="uf" class="col-sm-1 col-form-label">UF</label>
@@ -161,7 +161,7 @@
         </div>
         <div class="col-md-12 text-center" *ngIf="modoEdit">
           <button style="width: 40%; margin-right: 10px;" [disabled]="!form.valid" type="submit" class="btn btn-primary">Atualizar</button>
-          <button style="width: 40%" type="button" (click)="deletar(transportadora)"
+          <button style="width: 40%" type="button" (click)="onDelete(transportadora)"
             class="btn btn-danger">Deletar</button>
         </div>
       </form>
