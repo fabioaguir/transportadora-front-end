@@ -26,5 +26,5 @@ O projeto é baseado em componentes
 O projeto utiliza bibliotecas/APIs externas para algumas funcionalidades da aplicação
 
 Utilizadas:
-- @brunoc/ngx-viacep: 2.1.2,
-- ngx-pagination: 4.1.0
+- @brunoc/ngx-viacep: 2.1.2 : Para consulta de cep via api externa
+- ngx-pagination: 4.1.0: Para paginação dos resultados na tela de listagem do sistema
