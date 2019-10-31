@@ -27,7 +27,7 @@
             <input type="text" formControlName="nome" [(ngModel)]="transportadora.nome" name="nome" class="form-control"
               id="nome">
             <small *ngIf="!form.get('nome').valid && form.get('nome').touched" class="form-text text-danger">
-              Campo obrigatótio</small>
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -45,7 +45,7 @@
             <input type="text" formControlName="cnpj" [(ngModel)]="transportadora.cnpj" name="cnpj" class="form-control"
               id="cnpj">
             <small *ngIf="!form.get('cnpj').valid && form.get('cnpj').touched" class="form-text text-danger">
-              Campo obrigatótio</small>
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -54,7 +54,7 @@
             <input type="text" formControlName="telefone" [(ngModel)]="transportadora.telefone" name="telefone"
               class="form-control" id="telefone">
             <small *ngIf="!form.get('telefone').valid && form.get('telefone').touched"
-              class="form-text text-danger">Campo obrigatótio</small>
+              class="form-text text-danger">Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -74,10 +74,12 @@
         <div class="form-group row">
           <label for="modal" class="col-sm-2 col-form-label">Modal</label>
           <div class="col-sm-10">
-            <ng-multiselect-dropdown-angular7 formControlName="modal" [placeholder]="'Selecione'" [data]="dataModals"
+            <ng-multiselect-dropdown-angular7 formControlName="modal" [placeholder]="'Selecione (Campo obrigatório)'" [data]="dataModals"
               [(ngModel)]="transportadora.modal" [settings]="dropdownSettings" (onSelect)="onModalItemSelect($event)"
               (onSelectAll)="onModalSelectAll($event)" (onDeSelect)="onModalDeSelect($event)" (onDeSelectAll)="onModalDeSelectAll($event)">
             </ng-multiselect-dropdown-angular7>
+            <small *ngIf="!form.get('modal').valid && form.get('modal').touched" class="form-text text-danger">
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -94,7 +96,7 @@
               </ng-container>
             </select>
             <small *ngIf="!form.get('ufId').valid && form.get('ufId').touched" class="form-text text-danger">
-              Campo obrigatótio</small>
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -103,7 +105,7 @@
             <input type="text" formControlName="cidade" [(ngModel)]="transportadora.cidade" name="cidade"
               class="form-control" id="cidade">
             <small *ngIf="!form.get('cidade').valid && form.get('cidade').touched" class="form-text text-danger">
-              Campo obrigatótio</small>
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -112,7 +114,7 @@
             <input type="text" formControlName="bairro" [(ngModel)]="transportadora.bairro" name="bairro"
               class="form-control" id="bairro">
             <small *ngIf="!form.get('bairro').valid && form.get('bairro').touched" class="form-text text-danger">
-              Campo obrigatótio</small>
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -121,7 +123,7 @@
             <input type="text" formControlName="logradouro" [(ngModel)]="transportadora.logradouro" name="logradouro"
               class="form-control" id="logradouro">
             <small *ngIf="!form.get('logradouro').valid && form.get('logradouro').touched"
-              class="form-text text-danger">Campo obrigatótio</small>
+              class="form-text text-danger">Campo obrigatório</small>
           </div>
         </div>
         <div class="form-group row">
@@ -130,7 +132,7 @@
             <input type="text" formControlName="numero" [(ngModel)]="transportadora.numero" name="numero"
               class="form-control" id="numero">
             <small *ngIf="!form.get('numero').valid && form.get('numero').touched" class="form-text text-danger">
-              Campo obrigatótio</small>
+              Campo obrigatório</small>
           </div>
         </div>
         <div class="col-md-12 text-center" *ngIf="imgURL || transportadora.logo">
