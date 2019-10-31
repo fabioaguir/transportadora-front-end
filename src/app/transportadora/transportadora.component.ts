@@ -104,6 +104,7 @@ export class TransportadoraComponent implements OnInit {
 
   onAddNomeFilter(event: any) {
     this.nomeParaPesquisa = event.target.value;
+    event.target.value = '';
     this.search();
   }
 
@@ -114,6 +115,7 @@ export class TransportadoraComponent implements OnInit {
 
   onAddMunicipioFilter(event: any) {
     this.municipioParaPesquisa = event.target.value;
+    event.target.value = '';
     this.search();
   }
 
